@@ -11,6 +11,6 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept',  // Allowed headers
   });
 
-  await app.listen(3000);  // Port where your server runs
+  await app.listen(3000, '0.0.0.0');  // Port where your server runs
 }
 bootstrap();
