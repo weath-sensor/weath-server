@@ -1,0 +1,33 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Set your desired root password
+      MYSQL_DATABASE: weather_db        # Set the database name
+      MYSQL_USER: user                   # Custom MySQL user
+      MYSQL_PASSWORD: userpassword       # Password for the custom user
+    ports:
+      - "3306:3306"  # Expose MySQL on port 3306
+    volumes:
+      - mysql-data:/var/lib/mysql  # Persist MySQL data across restarts
+
+  nestjs:
+    build:
+      context: ./  # Path to your NestJS app directory
+    container_name: nestjs-container
+    depends_on:
+      - mysql  # Ensure MySQL is running before NestJS starts
+    ports:
+      - "3000:3000"  # Expose NestJS on port 3000
+    environment:
+      DB_HOST: mysql  # MySQL service name (Docker uses this to refer to the MySQL container)
+      DB_PORT: 3306    # MySQL port
+      DB_USERNAME: user  # MySQL user (must match the one set in the MySQL container)
+      DB_PASSWORD: userpassword  # MySQL password (must match the one set in the MySQL container)
+      DB_DATABASE: weather_db  # Database name (must match the one set in the MySQL container)
+    env_file:
+      - .env  # Ensure your .env file is loaded with environment variables (optional)
+
+volumes:
+  mysql-data:  # Volume to persist data across MySQL restarts
