@@ -5,7 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword  
       MYSQL_DATABASE: weather_db       
-      MYSQL_USER: user                   
+      MYSQL_USER: user                    # 'user' instead of 'root'
       MYSQL_PASSWORD: userpassword       
     ports:
       - "3306:3306"  
@@ -21,9 +21,9 @@ services:
     ports:
       - "3000:3000" 
     environment:
-      DB_HOST: mysql  
+      DB_HOST: mysql-container  # Name of the MySQL container
       DB_PORT: 3306 
-      DB_USERNAME: use
+      DB_USERNAME: user         # Same as MySQL user created
       DB_PASSWORD: userpassword
       DB_DATABASE: weather_db  
     env_file:
