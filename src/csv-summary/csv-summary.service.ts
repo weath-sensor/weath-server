@@ -4,8 +4,6 @@ import { Repository } from 'typeorm';
 import { LdrData } from '../ldr-data/ldr-data.entity';
 import { TemperatureData } from '../temperature/temperature.entity';
 import { Humidity } from '../humidity/humidity.entity';
-import * as fs from 'fs';
-import * as path from 'path';
 
 @Injectable()
 export class CsvSummaryService {
@@ -36,7 +34,7 @@ export class CsvSummaryService {
     // Ensure the data arrays are of the same length for pairing
     const maxLength = Math.min(temperatureData.length, ldrData.length, humidityData.length);
 
-    // Define rows explicitly as string array
+    // Define rows explicitly as a string array
     const rows: string[] = [];
     const header = 'Timestamp, Temperature (°C), LDR Value, Humidity (%)\n';
     
@@ -47,11 +45,6 @@ export class CsvSummaryService {
     }
 
     const csvContent = header + rows.join('\n');
-
-    // Save the CSV to a file
-    const filePath = path.resolve(__dirname, '../../csv-summary.csv');
-    fs.writeFileSync(filePath, csvContent, 'utf8');
-
-    return `CSV summary generated at: ${filePath}`;
+    return csvContent;
   }
 }
