@@ -1,14 +1,12 @@
-// app.module.ts
-
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { HumidityData } from './humidity.entity';
 import { HumidityService } from './humidity.service';
 import { HumidityController } from './humidity.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Humidity } from './humidity.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([HumidityData])],
-  providers: [HumidityService],
+  imports: [TypeOrmModule.forFeature([Humidity])],
   controllers: [HumidityController],
+  providers: [HumidityService],
 })
 export class HumidityModule {}

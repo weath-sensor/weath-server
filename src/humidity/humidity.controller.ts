@@ -1,20 +1,17 @@
-// humidity.controller.ts
-
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { HumidityService } from './humidity.service';
 
-@Controller('humidity-data')
+@Controller('humidity')
 export class HumidityController {
   constructor(private readonly humidityService: HumidityService) {}
 
   @Post()
-  async saveHumidityData(@Body() body: { humidityValue: number }) {
-    const { humidityValue } = body;
-    return this.humidityService.createHumidityData(humidityValue);
+  async create(@Body() body: { humidity: number }) {
+    return this.humidityService.create(body.humidity);
   }
 
   @Get()
-  async getAllHumidityData() {
-    return this.humidityService.getAllHumidityData();
+  async findAll() {
+    return this.humidityService.findAll();
   }
 }
