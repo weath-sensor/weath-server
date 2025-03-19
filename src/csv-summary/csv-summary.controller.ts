@@ -1,4 +1,3 @@
-// csv-summary/csv-summary.controller.ts
 import { Controller, Get } from '@nestjs/common';
 import { CsvSummaryService } from './csv-summary.service';
 
@@ -8,6 +7,9 @@ export class CsvSummaryController {
 
   @Get()
   async generateCsv() {
-    return await this.csvSummaryService.generateCsvSummary();
+    const csvContent = await this.csvSummaryService.generateCsvSummary();
+    
+    // Send the CSV content as a response
+    return { csvContent };
   }
 }
