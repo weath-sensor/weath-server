@@ -6,8 +6,7 @@ import { TemperatureData } from './temperature/temperature.entity';
 import { LdrData } from './ldr-data/ldr-data.entity';
 import { Humidity } from './humidity/humidity.entity';
 import { HumidityModule } from './humidity/humidity.module';
-import { CsvService } from './csv/csv.service';
-import { CsvController } from './csv/csv.controller';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -23,8 +22,6 @@ import { CsvController } from './csv/csv.controller';
     LdrDataModule,
     TemperatureModule,
     HumidityModule
-  ],
-  providers: [CsvService],
-  controllers: [CsvController],
+  ]
 })
 export class AppModule {}
