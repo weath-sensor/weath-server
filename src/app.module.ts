@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LdrDataModule } from './ldr-data/ldr-data.module';
+import { TemperatureDataModule } from './temperature-data/temperature-data.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { LdrDataModule } from './ldr-data/ldr-data.module';
       synchronize: true,
     }),
     LdrDataModule,
+    TemperatureDataModule
   ],
 })
 export class AppModule {}
