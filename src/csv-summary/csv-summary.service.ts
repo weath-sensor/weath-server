@@ -24,9 +24,10 @@ export class CsvSummaryService {
     
     // Make sure all data arrays are of equal length, or handle accordingly
     const rows = temperatureData.map((temp, index) => {
-      const ldrValue = ldrData[index]?.value ?? 'N/A'; // Handle missing LDR values
-      const humidityValue = humidityData[index]?.value ?? 'N/A'; // Handle missing Humidity values
-      return `${temp.value}, ${ldrValue}, ${humidityValue}\n`;
+      // Use the correct field names here
+      const ldrValue = ldrData[index]?.ldr_value ?? 'N/A'; // Correct field for LDR data
+      const humidityValue = humidityData[index]?.humidity_value ?? 'N/A'; // Correct field for Humidity data
+      return `${temp.temperature}, ${ldrValue}, ${humidityValue}\n`; // Correct field for Temperature
     });
 
     const csvContent = header + rows.join('');
