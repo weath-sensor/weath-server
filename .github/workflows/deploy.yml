@@ -22,5 +22,5 @@ jobs:
             cd devstore/weather-sensor
             sudo docker compose down
             git pull origin main
-            docker compose up --build
+            docker compose up --build -d
             echo "Deployment complete!"
