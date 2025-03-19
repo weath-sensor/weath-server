@@ -3,7 +3,6 @@ import { TemperatureService } from './temperature.service';
 import { TemperatureController } from './temperature.controller';
 
 @Module({
-  imports: [],
   controllers: [TemperatureController],
   providers: [TemperatureService],
 })
