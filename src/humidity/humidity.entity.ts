@@ -1,12 +1,14 @@
+// humidity.entity.ts
+
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class TemperatureData {
+export class HumidityData {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'float' })
-  temperature: number;
+  @Column()
+  humidity_value: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timestamp: Date;
