@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { parse } from 'json2csv';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TemperatureData } from './temperature/temperature.entity';
-import { LdrData } from './ldr-data/ldr-data.entity';
-import { Humidity } from './humidity/humidity.entity';
+import { TemperatureData } from '../temperature/temperature.entity';
+import { LdrData } from '../ldr-data/ldr-data.entity';
+import { Humidity } from '../humidity/humidity.entity';
 
 @Injectable()
 export class CsvService {
