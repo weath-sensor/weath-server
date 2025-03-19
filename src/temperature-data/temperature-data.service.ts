@@ -7,11 +7,14 @@ import { TemperatureData } from './temperature-data.entity';
 export class TemperatureDataService {
   constructor(
     @InjectRepository(TemperatureData)
-    private temperatureDataRepository: Repository<TemperatureData>,
+    private readonly temperatureDataRepository: Repository<TemperatureData>, // Inject the repository
   ) {}
 
-  async saveTemperatureData(temperature: number): Promise<TemperatureData> {
-    const temperatureData = this.temperatureDataRepository.create({ temperature });
-    return await this.temperatureDataRepository.save(temperatureData); // Save temperature data
+  async saveTemperatureData(temperature: number) {
+    const tempData = new TemperatureData();
+    tempData.temperature = temperature;
+
+    // Save the temperature data to the database using the repository
+    await this.temperatureDataRepository.save(tempData);
   }
 }

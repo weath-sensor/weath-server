@@ -6,8 +6,8 @@ export class TemperatureDataController {
   constructor(private readonly temperatureDataService: TemperatureDataService) {}
 
   @Post()
-  async create(@Body() data: { temperature: number }) {
-    const { temperature } = data;
-    return await this.temperatureDataService.saveTemperatureData(temperature);
+  async receiveTemperatureData(@Body() body: { temperature: number }) {
+    await this.temperatureDataService.saveTemperatureData(body.temperature);
+    return { message: 'Temperature data received successfully' };
   }
 }
