@@ -14,4 +14,8 @@ export class TemperatureService {
     const newTemperature = this.temperatureRepository.create({ temperature });
     return await this.temperatureRepository.save(newTemperature);
   }
+
+  async findAll(): Promise<TemperatureData[]> {
+    return await this.temperatureRepository.find();
+  }
 }
