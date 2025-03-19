@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -19,8 +19,12 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd devstore/weather-sensor
+            cd devstore/weath-sensor/weath-server
+
             sudo docker compose down
+
             git pull origin main
+
             docker compose up --build -d
+
             echo "Deployment complete!"
