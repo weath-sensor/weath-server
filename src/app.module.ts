@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LdrDataModule } from './ldr-data/ldr-data.module';
 import { TemperatureModule } from './temperature/temperature.module';
+import { TemperatureData } from './temperature/temperature.entity';
+import { LdrData } from './ldr-data/ldr-data.entity';
 
 @Module({
   imports: [
@@ -12,7 +14,7 @@ import { TemperatureModule } from './temperature/temperature.module';
       username: process.env.DB_USERNAME || 'user', 
       password: process.env.DB_PASSWORD || 'userpassword',
       database: process.env.DB_DATABASE || 'weather_db', 
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [TemperatureData, LdrData],
       synchronize: true,
     }),
     LdrDataModule,
