@@ -6,6 +6,7 @@ import { TemperatureData } from './temperature/temperature.entity';
 import { LdrData } from './ldr-data/ldr-data.entity';
 import { Humidity } from './humidity/humidity.entity';
 import { HumidityModule } from './humidity/humidity.module';
+import { CsvSummaryModule } from './csv-summary/csv-summary.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { HumidityModule } from './humidity/humidity.module';
     }),
     LdrDataModule,
     TemperatureModule,
-    HumidityModule
+    HumidityModule,
+    CsvSummaryModule,
   ]
 })
 export class AppModule {}
