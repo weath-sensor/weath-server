@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LdrDataModule } from './ldr-data/ldr-data.module';
 import { TemperatureModule } from './temperature/temperature.module';
@@ -10,6 +12,10 @@ import { CsvSummaryModule } from './csv-summary/csv-summary.module';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'csv'), // Path where the CSV file is stored
+      serveRoot: '/csv-summary', // URL path the client will use
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST || 'localhost', 
@@ -20,6 +26,7 @@ import { CsvSummaryModule } from './csv-summary/csv-summary.module';
       entities: [TemperatureData, LdrData, Humidity],
       synchronize: true,
     }),
+    
     LdrDataModule,
     TemperatureModule,
     HumidityModule,
