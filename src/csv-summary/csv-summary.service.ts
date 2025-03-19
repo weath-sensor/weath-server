@@ -1,39 +1,55 @@
 import { Injectable } from '@nestjs/common';
-import { InjectEntityManager } from '@nestjs/typeorm';
-import { EntityManager } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { LdrData } from '../ldr-data/ldr-data.entity';
+import { TemperatureData } from '../temperature/temperature.entity';
+import { Humidity } from '../humidity/humidity.entity';
 import * as fs from 'fs';
 import * as path from 'path';
-import { TemperatureData } from '../temperature/temperature.entity';
-import { LdrData } from '../ldr-data/ldr-data.entity';
-import { Humidity } from '../humidity/humidity.entity';
 
 @Injectable()
 export class CsvSummaryService {
   constructor(
-    @InjectEntityManager()
-    private readonly entityManager: EntityManager,
+    @InjectRepository(LdrData)
+    private readonly ldrDataRepository: Repository<LdrData>,
+    @InjectRepository(TemperatureData)
+    private readonly temperatureDataRepository: Repository<TemperatureData>,
+    @InjectRepository(Humidity)
+    private readonly humidityRepository: Repository<Humidity>,
   ) {}
 
   async generateCsvSummary(): Promise<string> {
-    // Fetch data directly from the database
-    const temperatureData = await this.entityManager.find(TemperatureData);
-    const ldrData = await this.entityManager.find(LdrData);
-    const humidityData = await this.entityManager.find(Humidity);
-
-    const header = 'Temperature, LDR, Humidity\n';
-    
-    // Make sure all data arrays are of equal length, or handle accordingly
-    const rows = temperatureData.map((temp, index) => {
-      // Use the correct field names here
-      const ldrValue = ldrData[index]?.ldr_value ?? 'N/A'; // Correct field for LDR data
-      const humidityValue = humidityData[index]?.humidity_value ?? 'N/A'; // Correct field for Humidity data
-      return `${temp.temperature}, ${ldrValue}, ${humidityValue}\n`; // Correct field for Temperature
+    // Fetch the last 100 records from each sensor
+    const temperatureData = await this.temperatureDataRepository.find({
+      take: 100,
+      order: { timestamp: 'DESC' },
+    });
+    const ldrData = await this.ldrDataRepository.find({
+      take: 100,
+      order: { timestamp: 'DESC' },
+    });
+    const humidityData = await this.humidityRepository.find({
+      take: 100,
+      order: { timestamp: 'DESC' },
     });
 
-    const csvContent = header + rows.join('');
-    const filePath = path.resolve(__dirname, '../../csv-summary.csv');
+    // Ensure the data arrays are of the same length for pairing
+    const maxLength = Math.min(temperatureData.length, ldrData.length, humidityData.length);
 
-    // Write the CSV to file
+    // Define rows explicitly as string array
+    const rows: string[] = [];
+    const header = 'Timestamp, Temperature (°C), LDR Value, Humidity (%)\n';
+    
+    for (let i = 0; i < maxLength; i++) {
+      const timestamp = new Date(temperatureData[i].timestamp);
+      const formattedTimestamp = `${timestamp.getFullYear()}-${(timestamp.getMonth() + 1).toString().padStart(2, '0')}-${timestamp.getDate().toString().padStart(2, '0')} ${timestamp.getHours().toString().padStart(2, '0')}:${timestamp.getMinutes().toString().padStart(2, '0')}:${timestamp.getSeconds().toString().padStart(2, '0')}`;
+      rows.push(`${formattedTimestamp}, ${temperatureData[i].temperature}, ${ldrData[i]?.ldr_value}, ${humidityData[i]?.humidity_value}`);
+    }
+
+    const csvContent = header + rows.join('\n');
+
+    // Save the CSV to a file
+    const filePath = path.resolve(__dirname, '../../csv-summary.csv');
     fs.writeFileSync(filePath, csvContent, 'utf8');
 
     return `CSV summary generated at: ${filePath}`;
