@@ -1,13 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class TemperatureData {
+export class Temperature {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('float')
+  @Column({ type: 'float' })
   temperature: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
+  timestamp: Date;
 }

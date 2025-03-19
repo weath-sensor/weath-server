@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TemperatureData } from './temperature.entity';
+import { Temperature } from './temperature.entity';
 
 @Injectable()
 export class TemperatureService {
   constructor(
-    @InjectRepository(TemperatureData)
-    private readonly temperatureRepository: Repository<TemperatureData>,
+    @InjectRepository(Temperature)
+    private temperatureRepository: Repository<Temperature>,
   ) {}
 
-  async create(temperature: number): Promise<TemperatureData> {
+  async createTemperature(temperature: number): Promise<Temperature> {
     const newTemperature = this.temperatureRepository.create({ temperature });
-    return await this.temperatureRepository.save(newTemperature);
+    return this.temperatureRepository.save(newTemperature);
   }
 
-  async findAll(): Promise<TemperatureData[]> {
-    return await this.temperatureRepository.find();
+  async getAllTemperatures(): Promise<Temperature[]> {
+    return this.temperatureRepository.find();
   }
 }
