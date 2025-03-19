@@ -18,6 +18,3 @@ import { LdrDataModule } from './ldr-data/ldr-data.module';
   ],
 })
 export class AppModule {}
-
-
-// Gentle comment
