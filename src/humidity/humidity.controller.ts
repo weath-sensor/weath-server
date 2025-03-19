@@ -5,13 +5,16 @@ import { HumidityService } from './humidity.service';
 export class HumidityController {
   constructor(private readonly humidityService: HumidityService) {}
 
+  // POST endpoint to save humidity data
   @Post()
   async create(@Body() body: { humidity: number }) {
-    return this.humidityService.create(body.humidity);
+    const { humidity } = body;
+    return this.humidityService.create(humidity); // Call service to save data
   }
 
+  // GET endpoint to retrieve all humidity data
   @Get()
   async findAll() {
-    return this.humidityService.findAll();
+    return this.humidityService.findAll(); // Call service to get all data
   }
 }

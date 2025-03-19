@@ -1,15 +1,13 @@
-// humidity.entity.ts
-
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
 @Entity()
-export class HumidityData {
+export class Humidity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  humidity_value: number;
+  @Column({ type: 'float' })
+  humidity_value: number;  // The humidity value from the sensor
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  timestamp: Date;
+  @CreateDateColumn()
+  timestamp: Date; // Automatically generated timestamp for when the data was saved
 }

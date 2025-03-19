@@ -1,24 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { HumidityData } from './humidity.entity';
+import { Humidity } from './humidity.entity';
 
 @Injectable()
 export class HumidityService {
   constructor(
-    @InjectRepository(HumidityData)
-    private readonly humidityRepository: Repository<HumidityData>,
+    @InjectRepository(Humidity)
+    private readonly humidityRepository: Repository<Humidity>,
   ) {}
 
-  async create(humidity: number): Promise<HumidityData> {
-    const newEntry = this.humidityRepository.create({ humidity });
-    return this.humidityRepository.save(newEntry);
+  // Save new humidity data
+  async create(humidity: number): Promise<Humidity> {
+    const newEntry = this.humidityRepository.create({
+      humidity_value: humidity,
+    });
+
+    return this.humidityRepository.save(newEntry); // Save the data to the database
   }
 
-  async findAll(): Promise<HumidityData[]> {
+  // Retrieve all humidity data, ordered by timestamp
+  async findAll(): Promise<Humidity[]> {
     return this.humidityRepository.find({
       order: { timestamp: 'DESC' },
-      take: 100, // limit recent 100 records
+      take: 100, // Optional: Limit to the most recent 100 records
     });
   }
 }

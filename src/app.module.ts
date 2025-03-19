@@ -4,7 +4,7 @@ import { LdrDataModule } from './ldr-data/ldr-data.module';
 import { TemperatureModule } from './temperature/temperature.module';
 import { TemperatureData } from './temperature/temperature.entity';
 import { LdrData } from './ldr-data/ldr-data.entity';
-import { HumidityData } from './humidity/humidity.entity';
+import { Humidity } from './humidity/humidity.entity';
 import { HumidityModule } from './humidity/humidity.module';
 
 @Module({
@@ -16,7 +16,7 @@ import { HumidityModule } from './humidity/humidity.module';
       username: process.env.DB_USERNAME || 'user', 
       password: process.env.DB_PASSWORD || 'userpassword',
       database: process.env.DB_DATABASE || 'weather_db', 
-      entities: [TemperatureData, LdrData, HumidityData],
+      entities: [TemperatureData, LdrData, Humidity],
       synchronize: true,
     }),
     LdrDataModule,
