@@ -3,16 +3,16 @@ import { TemperatureService } from './temperature.service';
 
 @Controller('temperature')
 export class TemperatureController {
-  constructor(private readonly temperatureService: TemperatureService) {}
+  constructor(private readonly temperatureService: TemperatureService) {};
 
   @Post()
   async saveTemperature(@Body() body: { temperature: number }) {
-    const { temperature } = body;
-    return this.temperatureService.createTemperature(temperature);
-  }
+    const { temperature } = body
+    return this.temperatureService.createTemperature(temperature)
+  };
 
   @Get()
   async getAllTemperatures() {
-    return this.temperatureService.getAllTemperatures();
-  }
+    return this.temperatureService.getAllTemperatures()
+  };
 }

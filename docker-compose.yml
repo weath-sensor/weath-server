@@ -2,30 +2,22 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql-container
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword  
-      MYSQL_DATABASE: weather_db       
-      MYSQL_USER: user                    # 'user' instead of 'root'
-      MYSQL_PASSWORD: userpassword       
+    restart: always
+    env_file:
+      - .env 
     ports:
-      - "3306:3306"  
+      - "3306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql 
+      - mysql-data:/var/lib/mysql
 
   nestjs:
     build:
-      context: ./ 
+      context: ./
     container_name: nestjs-container
     depends_on:
-      - mysql  
+      - mysql
     ports:
-      - "3000:3000" 
-    environment:
-      DB_HOST: mysql-container  # Name of the MySQL container
-      DB_PORT: 3306 
-      DB_USERNAME: user         # Same as MySQL user created
-      DB_PASSWORD: userpassword
-      DB_DATABASE: weather_db  
+      - "3000:3000"
     env_file:
       - .env
 

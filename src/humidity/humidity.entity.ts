@@ -6,8 +6,8 @@ export class Humidity {
   id: number;
 
   @Column({ type: 'float' })
-  humidity_value: number;  // The humidity value from the sensor
+  humidity_value: number;
 
   @CreateDateColumn()
-  timestamp: Date; // Automatically generated timestamp for when the data was saved
+  timestamp: Date;
 }

@@ -6,12 +6,10 @@ async function bootstrap() {
 
   app.enableCors({
     origin: 'http://51.222.111.230:5173',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: 'GET, PUT, POST, DELETE',
     allowedHeaders: 'Content-Type, Accept',
   });
 
   await app.listen(3000, '0.0.0.0');
 }
 bootstrap();
-
-// Gentle Comment

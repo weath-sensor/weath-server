@@ -8,14 +8,14 @@ export class TemperatureService {
   constructor(
     @InjectRepository(TemperatureData)
     private temperatureRepository: Repository<TemperatureData>,
-  ) {}
+  ) {};
 
   async createTemperature(temperature: number): Promise<TemperatureData> {
-    const newTemperature = this.temperatureRepository.create({ temperature });
-    return this.temperatureRepository.save(newTemperature);
-  }
+    const newTemperature = this.temperatureRepository.create({ temperature })
+    return this.temperatureRepository.save(newTemperature)
+  };
 
   async getAllTemperatures(): Promise<TemperatureData[]> {
-    return this.temperatureRepository.find();
-  }
+    return this.temperatureRepository.find()
+  };
 }
