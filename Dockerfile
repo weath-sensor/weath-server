@@ -12,5 +12,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-# Start the NestJS application
 CMD ["npm", "run", "start:prod"]
